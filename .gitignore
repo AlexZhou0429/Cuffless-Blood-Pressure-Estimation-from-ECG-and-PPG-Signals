@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Local data, trained models, and generated outputs
+data/*
+!data/README.md
+models/*
+!models/.gitkeep
+weights/
+outputs/*
+!outputs/.gitkeep
+_archive/
+
+# Training logs
+logs/
+*.log
+
+# Matplotlib cache
+.matplotlib/

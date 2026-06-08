@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cuffless-bp-estimation"
+version = "0.1.0"
+description = "Feature-based and deep-learning models for cuffless blood pressure estimation from ECG and PPG."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "joblib>=1.3",
+    "keras>=3.0",
+    "matplotlib>=3.8",
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scikit-learn>=1.4",
+    "scipy>=1.12",
+    "tensorflow>=2.16",
+]
+
+[project.optional-dependencies]
+notebooks = ["jupyter>=1.0"]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+cuffless-bp-train = "cuffless_bp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
