@@ -5,15 +5,8 @@ estimation from synchronized photoplethysmography (PPG) and
 electrocardiography (ECG) signals.
 
 The project compares two modeling strategies:
-
-- **Statistical feature branch:** feature mapping, outlier filtering,
-  training-only feature selection, and SVM, Random Forest, and AdaBoost
-  regression.
-- **Deep learning branch:** two independent bidirectional LSTM models, one for
-  systolic blood pressure (SBP) and one for diastolic blood pressure (DBP).
-
-> This repository is a research prototype. It is not a medical device and must
-> not be used for clinical diagnosis or treatment.
+- **Statistical feature branch:** feature mapping -> outlier filtering -> training-only feature selection -> Various ML models.
+- **Deep learning branch:** two independent bidirectional LSTM models, one for systolic blood pressure (SBP) and one for diastolic blood pressure (DBP).
 
 ## Pipeline
 
@@ -61,13 +54,13 @@ train/validation split.
 │   └── benchmark_metrics.csv
 ├── data/
 │   └── README.md
-├── models/                 # generated model artifacts; ignored by Git
+├── models/    
 ├── notebooks/
 │   ├── adaboost_results.ipynb
 │   ├── lstm_results.ipynb
 │   ├── random_forest_results.ipynb
 │   └── svm_results.ipynb
-├── outputs/                # generated metrics and figures; ignored by Git
+├── outputs/   
 ├── src/cuffless_bp/
 │   ├── cli.py
 │   ├── config.py
@@ -92,12 +85,6 @@ python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-```
-
-For development and testing:
-
-```bash
-python -m pip install -e ".[notebooks,dev]"
 ```
 
 ## Data
@@ -126,28 +113,14 @@ Run the complete comparison once from the repository root:
 python train.py
 ```
 
-The installed command-line entry point is equivalent:
-
-```bash
-cuffless-bp-train
-```
-
-Train only one branch:
+Train only one branch of the project:
 
 ```bash
 python train.py --skip-lstm
-python train.py --skip-traditional --epochs 30
 ```
-
-Useful options:
-
+or
 ```bash
-python train.py \
-  --seed 487 \
-  --max-features 24 \
-  --traditional-max-train 5000 \
-  --epochs 30 \
-  --batch-size 128
+python train.py --skip-traditional --epochs 30
 ```
 
 The feature mapping CSV files are large and are therefore not saved by
@@ -169,42 +142,6 @@ outputs/<method>/
 ├── true_vs_predicted.png
 ├── bland_altman_sbp.png
 └── bland_altman_dbp.png
-```
-
-Here, `<method>` is `svm`, `random_forest`, `adaboost`, or `lstm`.
-`metrics.csv` contains SBP/DBP RMSE, MAE, R-squared, and overall MAE in a
-single row. `predictions.csv` contains true values, predictions, and signed
-errors for every test beat.
-
-Additional run-level files include:
-
-```text
-outputs/
-├── benchmark_metrics.csv
-├── feature_scores.csv
-├── selected_features.json
-├── target_distributions.png
-├── selected_feature_distributions.png
-├── lstm_history.csv
-└── run_summary.csv
-```
-
-With `--save-feature-mapping`, the run also writes
-`feature_mapping_raw.csv`, `feature_mapping_filtered.csv`, and
-`feature_mapping_outliers.csv`.
-
-Saved models use standard reusable formats:
-
-```text
-models/
-├── svm.joblib
-├── random_forest.joblib
-├── adaboost.joblib
-├── feature_medians.csv
-├── selected_features.json
-├── normalization.json
-├── sbp_lstm.keras
-└── dbp_lstm.keras
 ```
 
 ## Visualization
@@ -235,26 +172,3 @@ training-only feature-selection safeguard in this packaged version.
 
 The full-precision values are available in
 [`assets/benchmark_metrics.csv`](assets/benchmark_metrics.csv).
-
-## Reproducibility and Limitations
-
-- The random seed controls data shuffling, traditional estimators, and LSTM
-  initialization.
-- Feature selection is fitted only on the training split.
-- The current test set is small, so the reported values should be interpreted
-  as preliminary.
-- The current split is beat-level rather than patient-level. Subject-wise
-  splitting is required once subject identifiers are available.
-- Future work includes MIMIC migration, acceleration plethysmogram features,
-  permutation-based feature importance, and subject-specific calibration.
-
-## Testing
-
-```bash
-pytest
-```
-
-## License
-
-No open-source license has been selected yet. Add a license before public
-distribution if reuse or redistribution should be permitted.
