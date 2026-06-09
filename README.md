@@ -90,6 +90,7 @@ python -m pip install -r requirements.txt
 ## Data
 
 Waveform data and derived NumPy arrays are intentionally excluded from the repository.
+You can use the data in MIMIC, or under the public repo https://github.com/thamolwanpo/estimateBP/tree/master/data.
 Place the five required files in `data/`:
 
 ```text
