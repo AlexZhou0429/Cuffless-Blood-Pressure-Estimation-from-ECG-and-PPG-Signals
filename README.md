@@ -89,7 +89,7 @@ python -m pip install -r requirements.txt
 
 ## Data
 
-Waveform data and derived NumPy arrays are intentionally excluded from Git.
+Waveform data and derived NumPy arrays are intentionally excluded from the repository.
 Place the five required files in `data/`:
 
 ```text
